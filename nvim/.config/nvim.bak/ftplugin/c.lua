@@ -1,1 +1,0 @@
-vim.opt.makeprg = [[gcc]]

@@ -44,9 +44,9 @@ export LDFLAGS="-L/opt/homebrew/opt/libomp/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/libomp/include"
 export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
 # some more ls aliases
-alias ls='eza --icons'
-alias ll='eza -l'
-alias la='eza --icons -a'
+alias ls='eza'
+alias ll='eza -l --git'
+alias la='eza -a'
 alias l='eza'
 
 alias ginit='git init && echo "**/.DS_Store" > .gitignore'
@@ -62,15 +62,29 @@ alias gpu='git push'
 alias gb='git branch'
 alias gs='git status'
 alias gc='git checkout'
+alias lg='lazygit'
 
-alias t='tmux'
+# alias t='tmux'
+
 alias v='nvim'
+alias v.='nvim .'
+alias vb='nvim ~/.zshrc'
+alias vt='nvim ~/.tmux.conf'
+alias v,='cd ~/.config/nvim && nvim ~/.config/nvim'
+
+alias sb='source ~/.zshrc'
+alias biye='conda activate biye'
+alias sp='source .venv/bin/activate'
+alias da='deactivate'
+
 alias c='clear'
 
 alias p='python'
 alias doc='pydoc'
 
 alias ssh="TERM=xterm-256color ssh"
+
+alias gt="ghostty"
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -81,6 +95,8 @@ source /opt/homebrew/etc/profile.d/z.sh
 #
 # alias listop='limactl stop debian'
 # alias listart='limactl start debian'
+
+# export XDG_CONFIG_HOME="~/.config/"
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
@@ -122,7 +138,8 @@ export FZF_DEFAULT_OPTS="--ansi --border"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # use my own bash file
-PATH=$PATH:~/.bin
+export PATH=$PATH:~/.bin
+export PATH="$HOME/.local/bin:$PATH"
 
 
 # Goerge Hotz's config
@@ -136,11 +153,7 @@ export CLICOLOR=1
 
 
 export TLDR_AUTO_UPDATE_DISABLED=true
-
-# enable the fuck command
-# eval $(thefuck --alias)
-
-
+#
 # add the mojo to the PATH
 export MODULAR_HOME="$HOME/.modular"
 export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
@@ -160,19 +173,10 @@ export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
 # use nvim 
 export MANPAGER='nvim +Man!'
 
+# enable the fuck command
+eval $(thefuck --alias)
 
-# eval "$(conda "shell.$(basename "${SHELL}")" hook)"
-
-# conda deactivate
-# conda activate base 
-#
-#
-
-export PATH="/Users/zdmai/.miniconda3/bin:$PATH"  # commented out by conda initialize
-
-# if [ -f ~/.bin/git-completion.zsh ]; then
-#   ~/.bin/git-completion.zsh
-# fi
+eval $(uv generate-shell-completion zsh)
 
 fpath+=("$(brew --prefix)/share/zsh/site-functions")
 autoload -U promptinit; promptinit
@@ -191,18 +195,5 @@ zstyle :prompt:pure:git:stash show yes
 
 prompt pure
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/zdmai/.miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/zdmai/.miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/zdmai/.miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/zdmai/.miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# command for spotlight
+# mdutil
