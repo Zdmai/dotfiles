@@ -1,0 +1,6 @@
+[submodule "nvim/.config/nvim"]
+	path = nvim/.config/nvim
+	url = git@github.com:Zdmai/nvim_config.git
+[submodule "simple_config"]
+	path = simple_config
+	url = git@github.com:Zdmai/simple_config.git

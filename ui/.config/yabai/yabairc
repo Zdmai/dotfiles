@@ -1,0 +1,84 @@
+#!/usr/bin/env sh
+
+# necessary to load scripting-addition during startup on macOS Big Sur
+# *yabai --load-sa* is configured to run through sudo without a password
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+# sketchybar settings
+yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+
+# mission-control desktop labels
+yabai -m space 1 --label coding
+yabai -m space 2 --label web
+yabai -m space 3 --label man/note
+yabai -m space 4 --label media
+yabai -m space 5 --label re
+yabai -m space 6 --label social
+
+# set the space 6 to float display the windows
+yabai -m config --space 6 layout float
+
+# window rules
+# yabai -m rule --add app="^Mail$" space=mail
+yabai -m rule --add app="^(Chrome)$" space=web
+yabai -m rule --add app="^Notes$" space=notes
+yabai -m rule --add app="^ida64$" space=re
+yabai -m rule --add app="^(Transmission|哔哩哔哩|Music|Spotify|YouTube)$" space=media manage=off
+
+yabai ndow_border_color  0x7f353535   \ndow_opacity       0.50         \-m rule --add app="^(Spotify|Music)$" space=media
+
+yabai -m rule --add app="^(Discord|QQ|WeChat|Telegram Lite|Twitter|Element|Discord)$" space=social manage=off
+# yabai -m rule --add app="^Steam$" space=games manage=off
+yabai -m rule --add app="^mpv$" manage=off border=off sticky=on layer=above opacity=1.0 grid=8:8:6:0:2:2
+
+yabai -m rule --add app="^(LuLu|Calculator|Software Update|AppCleaner|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|System Information|Steam|Alfred|Activity Monitor|Finder|Font Book|Anki|PigchaProxy|网易有道翻译|EuDic|CrossOver|python|V2rayU|TencentMeeting|iStat Menus|EasyConnect|AccessClient|Microsoft Remote Desktop Beta|Parallels Desktop)$" manage=off
+
+# yabai -m rule --add app="^()$" layout float manage=off
+
+# move between the windows
+
+# signals
+yabai -m signal --add event=window_destroyed active=yes action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null"
+yabai -m signal --add event=window_minimized active=yes action="if \$(yabai -m query --windows --window \$YABAI_WINDOW_ID | jq -r '.\"is-floating\"'); then yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null; fi"
+
+# specific space settings
+# yabai -m config --space mail  layout stack
+# yabai -m config --space games layout float
+
+
+# global settings
+yabai -m config external_bar               all:0:30     \
+                mouse_follows_focus        off          \
+                focus_follows_mouse        off          \
+                window_zoom_persist        off          \
+                window_placement           second_child \
+                window_topmost             off          \
+                window_shadow              float        \
+                window_opacity             off          \
+                window_opacity_duration    0.2          \
+                active_window_opacity      1.0          \
+                normal_window_opacity      0.95         \
+                window_animation_duration  0.3          \
+                insert_feedback_color      0xff9dd274   \
+                split_ratio                0.50         \
+                auto_balance               on           \
+                auto_padding               on           \
+                mouse_modifier             fn           \
+                mouse_action1              move         \
+                mouse_action2              resize       \
+                mouse_drop_action          swap         \
+                                                        \
+                top_padding                8            \
+                bottom_padding             9            \
+                left_padding               9            \
+                right_padding              9           \
+                window_gap                 8            \
+                layout                     bsp
+
+# the starting item of the borders
+# borders width=5.0 style=round width=1.0 hidpi=on active_color=0xffe2e2e3 inactive_color=0xff414550 &
+
+# active_color=0xffe1e3e4 inactive_color=0xff494d64
+
+echo "yabai configuration loaded.."

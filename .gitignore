@@ -1,0 +1,6 @@
+**.DS_Store
+# nvim/.config/nvim/lazyvim.json
+nvim/.config/nvim/lazyvim.json
+**.json
+nvim/.config/nvim/lazy-lock.json
+
